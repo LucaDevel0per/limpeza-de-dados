@@ -3,6 +3,7 @@ import pandas as pd
 from pathlib import Path
 import sys
 import matplotlib.pyplot as plt
+import io
 
 # --- Bloco para garantir que Python ache a pasta 'core' ---
 PASTA_ATUAL = Path(__file__).parent
@@ -109,6 +110,20 @@ if uploaded_file is not None:
                 data=csv_limpo,
                 file_name=f"{nome_base_arquivo}_limpo.csv",
                 mime='text/csv',
+                key='download_csv_button'
+            )
+
+            excel_buffer = io.BytesIO()
+
+            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                df_para_exibir_e_analisar.to_excel(writer, index=False, sheet_name='Dados_limpos')
+            
+            st.download_button(
+                label="Baixar Excel Limpo (.xlsx)",
+                data=excel_buffer.getvalue(), # Usamos getvalue() para pegar os bytes
+                file_name=f"{nome_base_arquivo}_limpo.xlsx",
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', # MIME type para .xlsx
+                key='download_excel_button' # Adicionando uma key
             )
 
         elif st.session_state.df_original is not None and not st.session_state.get('limpeza_foi_aplicada', False):
