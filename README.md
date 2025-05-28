@@ -2,7 +2,7 @@
 
 Bem-vindo à Ferramenta de Limpeza e Análise de Dados! Esta aplicação web interativa foi construída para ajudar você a carregar seus datasets (CSV ou Excel), identificar problemas comuns, aplicar uma limpeza básica e obter alguns insights rápidos, tudo isso com alguns cliques e um toque de caos organizado!
 
-➡️ **Teste a Ferramenta Online Aqui:** `https://projeto-limpeza.streamlit.app/` 
+➡️ **Teste a Ferramenta Online Aqui:** https://projeto-limpeza.streamlit.app/
 
 ## 📖 Guia do Usuário: Como Usar a Ferramenta Web
 
@@ -161,7 +161,7 @@ Este projeto é uma base sólida, mas sempre pode evoluir! Algumas ideias para e
 ## 👤 Autor
 Desenvolvido com um toque de loucura organizada por **LucaDevel0per** 🃏
 
-➡️ **Meu GitHub:** `https://github.com/LucaDevel0per`
+➡️ **Meu GitHub:** https://github.com/LucaDevel0per
 
 ---
 
