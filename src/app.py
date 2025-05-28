@@ -34,13 +34,22 @@ def mostrar_analise(resultado_analise, titulo="Análise"):
         st.error(resultado_analise)
 
 # --- LAYOUT DO APP STREAMLIT ---
-st.set_page_config(page_title="App Limpeza", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="App Limpeza", page_icon="🃏", layout="wide", initial_sidebar_state="expanded")
 st.title("Ferramenta de Limpeza de Dados")
 st.markdown("Suba seu arquivo CSV ou Excel e deixe a mágica acontecer!")
 
 # --- Barra Lateral (Sidebar) ---
 st.sidebar.header("1. Carregar Dados")
 uploaded_file = st.sidebar.file_uploader("Escolha seu arquivo:", type=['csv', 'xlsx'])
+
+# ... (seu código do st.sidebar.file_uploader e st.sidebar.success) ...
+
+# Adicionando uma linha divisória e os links
+st.sidebar.markdown("---") # Cria uma linha horizontal
+st.sidebar.markdown("Desenvolvido com 🃏 e Python por:")
+st.sidebar.markdown("[LucaDevel0per](https://github.com/LucaDevel0per)")
+# Adicional: Link para o repositório do projeto (quando tiver)
+# st.sidebar.markdown("[Repositório do Projeto](URL_DO_REPOSITORIO_DESTE_PROJETO_AQUI)")
 
 # --- Lógica Principal ---
 if uploaded_file is not None:
@@ -58,6 +67,11 @@ if uploaded_file is not None:
         st.header("Análise Inicial")
         mostrar_analise(analisar_sujeira(df_original_para_usar))
 
+        if st.checkbox("Mostrar DataFrame Original Completo", key='show_df_original'):
+            st.dataframe(df_original_para_usar)
+        else:
+            st.dataframe(df_original_para_usar.head())
+
         st.header("🧹 Opções de Limpeza")
         if st.button("✨ Aplicar Limpeza Básica! ✨", type="primary"):
             with st.spinner('Aplicando faxina... Aguarde!'):
@@ -74,6 +88,11 @@ if uploaded_file is not None:
 
             st.header("🧼 Análise Pós-Limpeza")
             mostrar_analise(analisar_sujeira(df_para_exibir_e_analisar))
+
+            if st.checkbox("Mostrar DataFrame Limpo Completo", key='show_df_limpo'):
+                st.dataframe(df_para_exibir_e_analisar)
+            else:
+                st.dataframe(df_para_exibir_e_analisar.head())
 
             st.header("📊 Resumos e Gráficos")
             # Adicionar uma 'key' única para o selectbox é uma boa prática

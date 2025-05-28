@@ -24,6 +24,10 @@ def limpar_dados_basicos(df):
     print("\n--- Iniciando Limpeza Básica ---")
     df_limpo = df.copy()
 
+    # Remoção de coluna fantasma 'Unnamed: 0'
+    if 'Unnamed: 0' in df_limpo.columns:
+        df_limpo.drop(columns=['Unnamed: 0'], inplace=True)
+        print("Coluna 'Unnamed: 0' removida.")
     for coluna in df_limpo.columns:
         # se a coluna tiver NaN
         if df_limpo[coluna].isnull().any():
