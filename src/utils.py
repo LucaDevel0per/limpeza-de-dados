@@ -96,3 +96,49 @@ def limpar_dados_basicos(df):
         if df_limpo[coluna].isnull().any():
             if is_numeric_dtype(df_limpo[coluna]):
                 mediana = df_limpo[coluna].median()
+                df_limpo[coluna].fillna(mediana, inplace=True)
+                print(f"Coluna numérica '{coluna}' preenchida com mediana ({mediana:.2f}).")
+            elif is_object_dtype(df_limpo[coluna]):
+                df_limpo[coluna].fillna("Unknown", inplace=True)
+                print(f"Coluna de objeto '{coluna}' preenchida com 'Unknown'.")
+            else:
+                print(f"Coluna '{coluna}' ({df_limpo[coluna].dtype}) com NaNs não tratada.")
+
+    # Remove duplicatas
+    duplicatas_antes = df_limpo.duplicated().sum()
+    if duplicatas_antes > 0:
+        df_limpo.drop_duplicates(inplace=True)
+        print(f"{duplicatas_antes} linhas duplicadas foram removidas.")
+    else:
+        print("Nenhuma duplicata encontrada.")
+
+    print("--- Limpeza Básica Concluída ---")
+    return df_limpo
+
+# df_carregado = carregar_dados(arquivo_a_testar)
+
+def fazer_limpeza(df_carregado):
+    if df_carregado is not None:
+        # 1. Analisa ANTES
+        print("\n--- ANÁLISE ANTES DA LIMPEZA ---")
+        analise_antes = analisar_sujeira(df_carregado)
+        if isinstance(analise_antes, dict):
+            for k, v in analise_antes.items(): print(f"{k}: {v}" if not isinstance(v, pd.Series) else f"\n{k}:\n{v}")
+        else:
+            print(analise_antes)
+
+        # 2. Limpa
+        df_carregado_limpo = limpar_dados_basicos(df_carregado)
+
+        # 3. Analisa DEPOIS
+        print("\n--- ANÁLISE DEPOIS DA LIMPEZA ---")
+        analise_depois = analisar_sujeira(df_carregado_limpo)
+        if isinstance(analise_depois, dict):
+            for k, v in analise_depois.items(): print(f"{k}: {v}" if not isinstance(v, pd.Series) else f"\n{k}:\n{v}")
+        else:
+            print(analise_depois)
+
+    else:
+        print("Falha ao carregar o arquivo da NBA.")
+
+fazer_limpeza(df_carregado)
